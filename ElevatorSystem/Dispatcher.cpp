@@ -1,7 +1,3 @@
-#include ".\Dispatcher.h"
-
-
-
 /*Dispatcher Program
 Makes the Datapools/pipelines/semaphores,
 Links to the datapools
@@ -9,10 +5,6 @@ Links to the 4 semaphores it uses
 Opens the pipeline for reading
 Fork the other three programs
 */
-
-//Testing the pull
-//Testing again
-
 struct LiftDataPool
 {
 	int CurrentFloor;
@@ -20,6 +12,9 @@ struct LiftDataPool
 	int LiftStatus;
 	int DoorStatus;
 };
+
+char input [2];
+
 
 int main()
 {
@@ -29,21 +24,125 @@ int main()
 	struct LiftDataPool* Lift1 = (struct LiftDataPool*)(dp1.LinkDataPool);
 	struct LiftDataPool* Lift2 = (struct LiftDataPool*)(dp2.LinkDataPool);
 
-	CPipe p1("Lift1Pipe");
-	CPipe p2("Lift2Pipe");
-	CPipe p3("IOPipe");
+	CPipe pipe1("Lift1Pipe");
+	CPipe pipe2("Lift2Pipe");
+	CPipe pipe3("IOPipe");
+
+	CSemaphore P2("Producer2", 0, 1);
+	CSemaphore P4("Producer4", 0, 1);
+	CSemaphore C2("Consumer2", 1, 1);
+	CSemaphore C4("Consumer4", 1, 1);
+
 
 
 do {
-test pipeline for presence of 2 character command from IO process
-if (/* 2 character command present:*/ p3.) {
-	if (command for lift1) {
-		signal command to lift 1
+//test pipeline for presence of 2 character command from IO process
+if ((p3.TestForData()) == sizeof(input))
+ {
+	p3.Read(&input, sizeof(input));
+
+	if (input[0] == 1) // Implies that a user is inside elevator #1
+	{
+		switch(input[1])
+		{
+	    
+			case 0
+				pipe1.Write(); // Command for elevator #1 to go to the 10th floor
+				break;
+
+			case 1
+				pipe1.Write(); // and so on....
+				break;
+
+			case 2
+				pipe1.Write();
+				break;
+
+			case 3
+				pipe1.Write();
+				break;
+
+			case 4
+				pipe1.Write();
+				break;
+
+			case 5
+				pipe1.Write();
+				break;
+
+			case 6
+				pipe1.Write();
+				break;
+
+			case 7
+				pipe1.Write();
+				break;
+
+			case 8
+				pipe1.Write();
+				break;
+
+			case 9
+				pipe1.Write();
+				break;
+			default
+				break();
+		}
+
+	
 	}
-	if (command for lift2) {
-		signal command to lift 2
+	if (input[0] == 2) 
+	{
+		switch(input[1])
+		{
+	    
+			case 0
+				pipe2.Write(); // Command for elevator #1 to go to the 10th floor
+				break;
+
+			case 1
+				pipe2.Write(); // and so on....
+				break;
+
+			case 2
+				pipe2.Write();
+				break;
+
+			case 3
+				pipe2.Write();
+				break;
+
+			case 4
+				pipe2.Write();
+				break;
+
+			case 5
+				pipe2.Write();
+				break;
+
+			case 6
+				pipe2.Write();
+				break;
+
+			case 7
+				pipe2.Write();
+				break;
+
+			case 8
+				pipe2.Write();
+				break;
+
+			case 9
+				pipe2.Write();
+				break;
+			default
+				break();
+		}
+
 	}
-	if(command for either lift) {
+	if(input[0] == 'U') // The passenger pressed "UP" from outside the elevators
+	{
+
  		/* such as up or down request */
 		/* simple algorithm */
 		signal command to both lifts
@@ -51,6 +150,18 @@ if (/* 2 character command present:*/ p3.) {
 		look at status of both lifts
 		signal the most appropriate lift
 	}
+
+	if(input[0] == 'D') // The passenger pressed "DOWN" from outside the elevators
+	{
+
+ 		/* such as up or down request */
+		/* simple algorithm */
+		signal command to both lifts
+		/* complex algorithm with more marks */
+		look at status of both lifts
+		signal the most appropriate lift
+	}
+
 	if(command is ‘ee’ for exit) {
 		Signal end of simulation to child process car1 and car2
 		do{
