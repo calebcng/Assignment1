@@ -1,5 +1,4 @@
 #include ".\IO.h"
-#include ".\rt.h"
 #include <stdio.h>
 #include <conio.h>
 
@@ -38,10 +37,10 @@ int main()
 
 	//Initialize variables
 	char input[2];
-	int Lift1Floor;
-	int Lift1Direction;
-	int Lift1Status;
-	int Lift1DoorStatus;
+	int Lift1Floor, Lift2Floor;
+	int Lift1Direction, Lift2Direction;
+	int Lift1Status, Lift2Status;
+	int Lift1DoorStatus, Lift2DoorStatus;
 
 	do {
 		//test keyboard for 2 characters
@@ -60,6 +59,7 @@ int main()
 			{
 				//Input characters make sense. Proceed to send to Dispatcher.
 				printf( "Input characters make sense. Proceeding to Dispatcher.\n" );
+				pipe3.Write( &input, sizeof(input) );
 			}
 			else {
 				printf( "Invalid inputs.\n" );
