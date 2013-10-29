@@ -9,6 +9,10 @@ Links to the 4 semaphores it uses
 Opens the pipeline for reading
 Fork the other three programs
 */
+
+//Testing the pull
+//Testing again
+
 struct LiftDataPool
 {
 	int CurrentFloor;
