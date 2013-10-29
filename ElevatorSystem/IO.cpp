@@ -8,6 +8,7 @@ I/O Program
 Link to datapools, semaphores, open pipeline
 install signal handler using intercept() primitive
 */
+// Testing push stuff
 struct LiftDataPool
 {
 	int CurrentFloor;
@@ -70,7 +71,7 @@ do {
 /*	
 	if(read_semaphore(PS3) > 0) car1 produced data 
 		WAIT(PS3) ;
-		read car1’s datapool into local structure
+		read car1ï¿½s datapool into local structure
 		SIGNAL(CS3) ;
 		Redraw Lift1 screen
 	} 
@@ -86,7 +87,7 @@ do {
 
 	if(read_semaphore(PS4) > 0) /* car2 produced data */
 		WAIT(PS4) ;
-		read car2’s datapool into local structure
+		read car2ï¿½s datapool into local structure
 		SIGNAL(CS4) ;
 		Redraw Car2 screen
 	}
