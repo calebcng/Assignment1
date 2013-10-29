@@ -1,3 +1,5 @@
+#include "Dispatcher.h"
+
 /*Dispatcher Program
 Makes the Datapools/pipelines/semaphores,
 Links to the datapools
@@ -16,19 +18,30 @@ struct LiftDataPool
 char input [2];
 
 
+
 int main()
 {
-	CDataPool dp1("Lift1", sizeof(struct LiftDataPool));
+	int tempCurrentFloor; //local variables to store datapool data
+	int tempDirection;
+	int tempLiftStatus;
+	int tempDoorStatus;
+
+	int tempCurrentFloor2;
+	int tempDirection2;
+	int tempLiftStatus2;
+	int tempDoorStatus2;
+
+	CDataPool dp1("Lift1", sizeof(struct LiftDataPool)); // creating and linking datapools
 	CDataPool dp2("Lift2", sizeof(struct LiftDataPool));
 
 	struct LiftDataPool* Lift1 = (struct LiftDataPool*)(dp1.LinkDataPool);
 	struct LiftDataPool* Lift2 = (struct LiftDataPool*)(dp2.LinkDataPool);
 
-	CPipe pipe1("Lift1Pipe");
+	CPipe pipe1("Lift1Pipe"); // creating pipelines
 	CPipe pipe2("Lift2Pipe");
 	CPipe pipe3("IOPipe");
 
-	CSemaphore P2("Producer2", 0, 1);
+	CSemaphore P2("Producer2", 0, 1); // creating semaphonres (for mutual exclusion of the datapool)
 	CSemaphore P4("Producer4", 0, 1);
 	CSemaphore C2("Consumer2", 1, 1);
 	CSemaphore C4("Consumer4", 1, 1);
@@ -162,24 +175,41 @@ if ((p3.TestForData()) == sizeof(input))
 		signal the most appropriate lift
 	}
 
-	if(command is ‘ee’ for exit) {
+	if(input == "ee")
+	{
 		Signal end of simulation to child process car1 and car2
+
 		do{
 			test status of each lift (in datapool)
 		} while( lifts are not on ground floor and not idle)
+
 		set flagto TRUE indicate exit simulation
 	}
 }
-if(read semaphore(PS1) > 0) /* indicates car1 has produced data */
-	Wait(PS1)
-	copy contents of car*’s datapool into local structure
-	Signal (CS1)
+if((P2.Read()) > 0) /* indicates car1 has produced data */
+{
+	P2.Wait();
+
+	tempCurrentFloor = Lift1->CurrentFloor; //copy contents of car*’s datapool into local structure
+	tempDirection = Lift1->Direction;
+	tempLiftStatus = Lift1->LiftStatus;
+	tempDoorStatus = Lift1->DoorStatus;
+
+	C2.Signal();
 }
-if(read semaphore(PS2) > 0) /* indicates car2 has produced data */
-	wait(PS2
-	copy contents of car*’s datapool into local structure
-	Signal (CS2)
+
+if((P4.Read()) > 0) /* indicates car1 has produced data */
+{
+	P4.Wait();
+
+	tempCurrentFloor2 = Lift2->CurrentFloor; //copy contents of car*’s datapool into local structure
+	tempDirection2 = Lift2->Direction;
+	tempLiftStatus2 = Lift2->LiftStatus;
+	tempDoorStatus2 = Lift2->DoorStatus;
+
+	C4.Signal();
 }
+
 } while( exit flag is not TRUE)
 	Signal three child processes telling them to exit Now (they should wait for this before exiting)
 	Delete datapools, semaphores, empty pipeline
