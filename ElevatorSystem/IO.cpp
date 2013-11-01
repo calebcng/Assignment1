@@ -68,6 +68,10 @@ int main()
 		}
 		else if( input[0]=='e' && input[1] == 'e' ) {
 			//trigger end simulation flag
+<<<<<<< HEAD
+=======
+			printf( "Request to end simulation.\n" );
+>>>>>>> upstream/master
 		}
 		else {
 			printf( "Invalid inputs.\n" );
