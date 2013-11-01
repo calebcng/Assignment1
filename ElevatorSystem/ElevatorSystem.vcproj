@@ -183,6 +183,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Lift1.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Lift2.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Parent.cpp"
 				>
 			</File>
@@ -206,6 +214,14 @@
 			</File>
 			<File
 				RelativePath=".\Lift.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Lift1.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Lift2.h"
 				>
 			</File>
 			<File

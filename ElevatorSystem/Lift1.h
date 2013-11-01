@@ -1,12 +1,11 @@
 #include "rt.h"
 
-class Lift
+class Lift1
 {
 	private:
 		int liftnum;
 	public:
-		Lift(int I) { liftnum = I; };
-		~Lift();
+		Lift1(int I) { liftnum = I; };
+		~Lift1();
 
 };
-
